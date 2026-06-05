@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人品牌與網站規劃簡報</title>
+    <style>
+        /* CSS 變數：定義現代深色科技風色彩（藍綠色與黑曜石） */
+        :root {
+            --bg-main: #0B0F19;        /* 主背景：極深藍黑 */
+            --bg-card: #161F30;        /* 卡片背景：深藍灰 */
+            --accent-primary: #00F5D4; /* 主點綴色：亮藍綠色 (Teal) */
+            --accent-secondary: #00B4D8;/* 次點綴色：天空藍 */
+            --text-main: #F3F4F6;      /* 主要文字：近純白 */
+            --text-muted: #9CA3AF;     /* 次要文字：灰色 */
+            --border-color: #24324D;   /* 邊框顏色 */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 0;
+        }
+
+        /* 簡報容器：限制最大寬度，使其在網頁上看起來像精美簡報投影片 */
+        .presentation-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 投影片頁面樣式 */
+        .slide {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 裝飾線條 */
+        .slide::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+        }
+
+        /* 投影片頁碼與頁首小字 */
+        .slide-header {
+            display: table;
+            width: 100%;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
+        }
+        
+        .slide-meta {
+            display: table-cell;
+            font-size: 11pt;
+            color: var(--accent-primary);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .slide-number {
+            display: table-cell;
+            text-align: right;
+            font-size: 11pt;
+            color: var(--text-muted);
+        }
+
+        /* 標題樣式 */
+        h1 {
+            font-size: 28pt;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        h1 span {
+            color: var(--accent-primary);
+        }
+
+        h2 {
+            font-size: 20pt;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        h2 span {
+            color: var(--accent-primary);
+        }
+
+        h3 {
+            font-size: 14pt;
+            color: var(--accent-secondary);
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 12pt;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        /* 老師的小補貼方塊 */
+        .teacher-note {
+            background-color: rgba(0, 245, 212, 0.05);
+            border-left: 4px solid var(--accent-primary);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 20px;
+            font-size: 11pt;
+        }
+
+        .teacher-note strong {
+            color: var(--accent-primary);
+        }
+
+        /* 第一頁：封面版面 */
+        .cover-content {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .cover-subtitle {
+            font-size: 16pt;
+            color: var(--accent-secondary);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .cover-badge {
+            display: inline-block;
+            background-color: rgba(0, 180, 216, 0.2);
+            color: var(--accent-secondary);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 10pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* 表格與佈局通用元件（替代Flex/Grid） */
+        .layout-table {
+            display: table;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 20px 0;
+            margin: 20px -20px;
+        }
+
+        .layout-cell {
+            display: table-cell;
+            vertical-align: top;
+        }
+
+        .w-33 { width: 33.33%; }
+        .w-50 { width: 50%; }
+        .w-40 { width: 40%; }
+        .w-60 { width: 60%; }
+
+        /* 第二頁：個人頭像與核心聚焦 */
+        .avatar-container {
+            width: 100%;
+            height: 280px;
+            background-color: #161F30;
+            /* border: 2px dashed var(--accent-primary);
+            border-radius: 12px; */
+            position: relative;
+            text-align: center;
+        }
+
+        .avatar-placeholder {
+            position: absolute;
+            top: 37%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 85%;
+            padding: 20px;
+        }
+
+        .avatar-icon {
+            font-size: 40pt;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .profile-list {
+            list-style: none;
+        }
+
+        .profile-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 15px;
+            font-size: 12pt;
+        }
+
+        .profile-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        /* 第三頁：多欄資訊圖塊與量化指標 */
+        .stat-card {
+            background-color: #1F2A45;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+        }
+
+        .stat-number {
+            font-size: 32pt;
+            font-weight: bold;
+            color: var(--accent-primary);
+            line-height: 1;
+            margin-bottom: 10px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* 第四頁：專案卡片網格 */
+        .project-card {
+            background-color: #1F2A45;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            height: 100%;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background-color: rgba(0, 245, 212, 0.1);
+            color: var(--accent-primary);
+            font-size: 9pt;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        /* 第五頁：職涯與學習時間軸 */
+        .timeline {
+            margin-top: 30px;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -30px;
+            top: 6px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--bg-card);
+            border: 3px solid var(--accent-primary);
+        }
+
+        .timeline-date {
+            font-size: 11pt;
+            font-weight: bold;
+            color: var(--accent-primary);
+            margin-bottom: 5px;
+        }
+
+        /* 底部控制導覽列 */
+        .nav-controls {
+            text-align: center;
+            margin-top: -20px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: var(--bg-main);
+            padding: 12px 30px;
+            font-size: 11pt;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 245, 212, 0.3);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+
+        <!-- Slide 1: 封面投影片 -->
+        <div class="slide" id="slide-1">
+            <div class="slide-header">
+                <div class="slide-meta">Concept Presentation</div>
+                <div class="slide-number">01 / 05</div>
+            </div>
+            <div class="cover-content">
+                <div class="cover-badge">VISION & LAYOUT DESIGN</div>
+                <h1>網頁版面規劃<span>簡報</span></h1>
+                <div class="cover-subtitle">高質感深色科技風 · 個人品牌網站實踐</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: 個人頭像與核心聚焦 (雙欄排版) -->
+        <div class="slide" id="slide-2">
+            <div class="slide-header">
+                <div class="slide-meta">01 . About Me Profile</div>
+                <div class="slide-number">02 / 05</div>
+            </div>
+            <h2>個人頭像與<span>核心聚焦欄位</span></h2>
+            
+            <div class="layout-table">
+                <!-- 左欄：照片佔位符 -->
+                <div class="layout-cell w-40">
+                    <div class="avatar-container">
+                        <div class="avatar-placeholder">
+                            <img src="picture.webp" alt="個人照片" style="width: 100%; border-radius: 8px; border: 2px solid var(--accent-primary);">
+                        </div>
+                    </div>
+                </div>
+                <!-- 右欄：核心文字 -->
+                <div class="layout-cell w-60">
+                    <h1 style="font-size: 32pt; margin-bottom: 15px; color: var(--text-main);">林筱婕</h1>
+                    <p>目前就讀於國立臺北科技大學互動設計系，專注於將虛擬美學（3D 建模、動畫）與實體互動（互動裝置、感測器）結合，創造前所未有的科技運動與新媒體體驗。</p>
+                    <ul class="profile-list">
+                        <li><strong>專長領域：</strong> 網頁前端開發、Unity 遊戲引擎、3D 視覺設計</li>
+                        <li><strong>核心研究：</strong> 機器學習骨架偵測 (YOLO/MediaPipe)、體感互動系統設計</li>
+                        <li><strong>目前目標：</strong> 探索 WebGL 與 3D 網頁技術，打造流暢的線上互動展間</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: 量化數據指標區 (三欄排版) -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header">
+                <div class="slide-meta">02 . Key Metrics</div>
+                <div class="slide-number">03 / 05</div>
+            </div>
+            <h2>用數據說話：<span>量化指標圖塊</span></h2>
+            
+            <div class="layout-table">
+                <!-- 指標 1 -->
+                <div class="layout-cell w-33">
+                    <div class="stat-card">
+                        <div class="stat-number">3+</div>
+                        <h3>大型策展經驗</h3>
+                        <p style="font-size: 10pt; margin-bottom: 0; margin-top: 10px;">包含迪卡儂科技運動賽、新媒體互動展覽之場地規劃與技術總監。</p>
+                    </div>
+                </div>
+                <!-- 指標 2 -->
+                <div class="layout-cell w-33">
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <h3>獨立開發專案</h3>
+                        <p style="font-size: 10pt; margin-bottom: 0; margin-top: 10px;">涵蓋 Unity C# 遊戲、TouchDesigner 影音裝置及響應式網頁系統。</p>
+                    </div>
+                </div>
+                <!-- 指標 3 -->
+                <div class="layout-cell w-33">
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <h3>跨領域協作力</h3>
+                        <p style="font-size: 10pt; margin-bottom: 0; margin-top: 10px;">能與 3D 設計師、硬體工程師流暢溝通，將創意完美落地執行。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: 專案作品網格 (雙欄不對稱排版) -->
+        <div class="slide" id="slide-4">
+            <div class="slide-header">
+                <div class="slide-meta">03 . Featured Projects</div>
+                <div class="slide-number">04 / 05</div>
+            </div>
+            <h2>核心作品與<span>專案展示</span></h2>
+            
+            <div class="layout-table">
+                <!-- 作品 1 -->
+                <div class="layout-cell w-50">
+                    <div class="project-card">
+                        <div class="project-tag">互動體感遊戲 · 2026</div>
+                        <h3 style="color: var(--text-main); font-size: 15pt; margin-bottom: 10px;">Legend of the Rower (划船器傳奇)</h3>
+                        <p style="font-size: 11pt;">結合划船機硬體感測與 Unity HDRP 畫面，打造高沉浸感的虛擬健身競賽遊戲。於迪卡儂中和店實地展出，吸引破百人次體驗。</p>
+                    </div>
+                </div>
+                <!-- 作品 2 -->
+                <div class="layout-cell w-50">
+                    <div class="project-card">
+                        <div class="project-tag">電腦視覺應用 · 2026</div>
+                        <h3 style="color: var(--text-main); font-size: 15pt; margin-bottom: 10px;">LEGEND OF MUAY THAI</h3>
+                        <p style="font-size: 11pt;">利用 YOLOv8 與 MediaPipe 進行多人群體動態追蹤，即時偵測泰拳動作並給予精準反饋。成功解決多人群聚時的骨架遮蔽與訊號抖動問題。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: 職涯與成長里程碑 (時間軸排版) -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <div class="slide-meta">04 . Growth Timeline</div>
+                <div class="slide-number">05 / 05</div>
+            </div>
+            <h2>職涯發展與<span>學習時間軸</span></h2>
+            
+            <div class="timeline">
+                <!-- 時間軸項目 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2026 年 04 月</div>
+                    <h3 style="color: var(--text-main); font-size: 13pt;">修習他系課程</h3>
+                    <p style="font-size: 11pt;">準備轉系。</p>
+                </div>
+                <!-- 時間軸項目 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2025 年 03 月</div>
+                    <h3 style="color: var(--text-main); font-size: 13pt;">外出實習</h3>
+                    <p style="font-size: 11pt;">學習不要發脾氣，要有耐心。</p>
+                </div>
+                <!-- 時間軸項目 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-date">2024 年 12 月</div>
+                    <h3 style="color: var(--text-main); font-size: 13pt;">北科大互動設計系桌遊設計成果</h3>
+                    <p style="font-size: 11pt;">命運之路桌遊成果展。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部互動控制區（使用簡單的 JavaScript 來增強簡報體驗） -->
+        <div class="nav-controls">
+            <button class="btn" onclick="scrollToTop()">回簡報首頁</button>
+        </div>
+
+    </div>
+
+    <script>
+        // JavaScript 基礎用法示範：點擊按鈕後會流暢地捲動到網頁最上方
+        function scrollToTop() {
+            // window.scrollTo 是瀏覽器內建的函式，用來控制網頁視窗捲動
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // 'smooth' 代表平滑流暢的捲動效果
+            });
+        }
+    </script>
+</body>
+</html>
